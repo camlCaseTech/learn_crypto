@@ -1,0 +1,18 @@
+<div ng-controller="hashCtrl">
+	<h3>Choose a hash function and type something</h3>
+
+	<form name="hashFunctions">
+	  <label><input type="radio" ng-model="hashes.hashName" value="MD5">MD5</label>
+	  	<br/>
+	  <label><input type="radio" ng-model="hashes.hashName" value="SHA-256">SHA-256</label>
+	  	<br/>
+	  <label><input type="radio" ng-model="hashes.hashName" value="SHA-3">SHA-3</label>
+	  	<br/>
+	</form>
+
+	<input type="text" size="60" ng-model="message" ng-change="createHash()" />
+
+	<h3>Here's a hash of your text in real time!</h3>
+	<p>{{createHash(message, hashes.hashName)}}</p>
+	<br/>
+</div>

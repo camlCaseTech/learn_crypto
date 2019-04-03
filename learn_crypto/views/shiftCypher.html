@@ -1,0 +1,46 @@
+<div ng-controller="shiftCypherCtrl">
+	<h3>Type a sentence and it will be converted to binary</h3>
+
+	<div ng-model="charFreq" ng-init="offset=0">
+		<form name="shiftCypher">
+			<label>
+				<input type="text" size="10" ng-model="offset" 
+						ng-change="charFrequency(asciiCode(textCode, offset)); toBinary(codeArray.join(''), 0);" />
+				Offset
+			</label>
+			<br/>
+			<input type="text" size="60" ng-model="textCode" 
+					ng-change="asciiCode(textCode, offset); charFrequency(codeArray); toBinary(codeArray.join(''), 0);" />
+		</form>
+
+		<h3>Caesar Cypher</h3>
+		<p>{{codeArray.join('')}}</p>
+		<br/>
+		<h3>Binary</h3>
+		<p>{{binary.join('')}}</p>
+		<br/>
+		<h3>Uniform Distribution</h3>
+		<br/>
+		<p>{{randArray.join('')}}</p>
+		<br/>
+		<button ng-click="randUniform(binary.join(''))" class="btn btn-success">Random</button>
+		<br/>
+		<h3>XOR Output</h3>
+		<br/>
+		<p>{{xorArray.join('')}}</p>
+		<br/>
+		<button ng-click="xorBinary(binary.join(''), randArray)" class="btn btn-success">XOR</button>
+		<br/>
+		<h3>Shift Cypher Letter Frequency</h3>
+		<br/>
+		<button ng-click="charFrequency(asciiCode(toAscii(xorArray.join('')), offset))" class="btn btn-success">Update</button>
+		<br/>
+		<d3-bar-chart data="charFreq" height="500" width="800" fill="blue"></d3-bar-chart>
+		<br/>
+	</div>
+
+	<h3>English Language Letter Frequency</h3>
+	<br/>
+	<d3-bar-chart data="englishFreq" height="500" width="800" fill="red"></d3-bar-chart>
+	<br/>
+</div>
