@@ -1,12 +1,12 @@
 #!/bin/bash
 # file: build.sh
 
-cd learn-crypto-frontend
+cd frontend
 yarn && yarn build
 cd ..
 
-rm -rf learn-crypto-server/static
-cp -rf learn-crypto-frontend/build learn-crypto-server/static
+rm -rf server/static
+cp -rf frontend/build server/static
 
-cd learn-crypto-server
+cd server
 stack build

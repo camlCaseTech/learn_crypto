@@ -1,10 +1,10 @@
-name:                learn-crypto-server
+name:                server
 version:             0.1.0.0
-github:              "githubuser/learn-crypto-server"
+github:              "camlcasetech/learn_crypto"
 license:             BSD3
-author:              "Author name here"
-maintainer:          "example@example.com"
-copyright:           "2019 Author name here"
+author:              "James M.C. Haver II"
+maintainer:          "james@camlcase.io"
+copyright:           "2019 camlCase"
 
 extra-source-files:
 - README.md
@@ -30,7 +30,7 @@ library:
   source-dirs: src
 
 executables:
-  learn-crypto-server:
+  server:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
@@ -38,15 +38,4 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - learn-crypto-server
-
-tests:
-  learn-crypto-server-test:
-    main:                Spec.hs
-    source-dirs:         test
-    ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
-    dependencies:
-    - learn-crypto-server
+    - server
