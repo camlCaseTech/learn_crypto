@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Thing from './Thing.js';
+import React, { Component } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import Thing from "./Thing.js";
+import ShiftCipher from "./ShiftCipher.js";
 
 class App extends Component {
   render() {
@@ -20,7 +21,8 @@ class App extends Component {
           >
             Learn React
           </a>
-          <Thing></Thing>
+          <Thing />
+          <ShiftCipher />
         </header>
       </div>
     );
