@@ -17,10 +17,25 @@ let asciiCode = (textCode, offset) => {
   return codeArray;
 };
 
+let toBinary = (str, spaceSeparatedOctets) => {
+  let binary = [];
+  let space;
+  if (spaceSeparatedOctets) {
+    space = " ";
+  } else {
+    space = "";
+  }
+  for (let i = 0; i < str.length; i++) {
+    binary += str[i].charCodeAt(0).toString(2) + space;
+  }
+  return binary;
+};
+
 let zeroPad = num => {
   return "00000000".slice(String(num).length) + num;
 };
 
+/*
 let toBinary = (str, spaceSeparatedOctets) => {
   let binary = [];
   return str.replace(/[\s\S]/g, function(str) {
@@ -30,6 +45,7 @@ let toBinary = (str, spaceSeparatedOctets) => {
       : binary.push(str + " ");
   });
 };
+*/
 
 let toAscii = function(bin) {
   return bin.replace(/\s*[01]{8}\s*/g, function(bin) {
@@ -52,7 +68,7 @@ class ShiftCipher extends Component {
   handleChangeOffset(event) {
     let offset = event.target.value;
     let codeArray = asciiCode(this.state.textCode, offset);
-    let binary = toBinary(codeArray.join(""), 0);
+    let binary = toBinary(codeArray.join(""), false);
     console.log("binary", binary);
     this.setState({ binary, offset });
   }
@@ -61,7 +77,7 @@ class ShiftCipher extends Component {
     // asciiCode(textCode, offset); charFrequency(codeArray); toBinary(codeArray.join(''), 0);" />
     let textCode = event.target.value;
     let codeArray = asciiCode(textCode, this.state.offset);
-    let binary = toBinary(codeArray.join(""), 0).join("");
+    let binary = toBinary(codeArray.join(""), false);
     this.setState({ binary, textCode });
   }
 
