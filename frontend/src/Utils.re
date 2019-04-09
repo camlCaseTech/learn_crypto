@@ -16,6 +16,11 @@ let explode = s => {
 
 let charToString = char => String.make(1, char);
 
+let int_of_string_opt = x =>
+  try (Some(int_of_string(x))) {
+  | Failure(_) => None
+  };
+
 let leftPad = (word: string, num: int, pad_char: string) =>
   String.length(word) < num ?
     {
@@ -29,3 +34,9 @@ let leftPad = (word: string, num: int, pad_char: string) =>
 
 let mapString = (f: string => 'a, str: string) =>
   Array.map(s => f(s), Js.String.split("", str));
+
+let getTargetString = (event: ReactEventRe.Form.t) : string => ReactDOMRe.domElementToObj(
+                                                                  ReactEventRe.Form.target(
+                                                                    event,
+                                                                  ),
+                                                                )##value;

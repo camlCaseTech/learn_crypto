@@ -33,16 +33,19 @@ let toBinary = (str: string, spaceSeparatedOctets: bool) => {
 };
 
 let encodeCaesarCipher = (str: string, offset: int) =>
-  mapString(
-    s => {
-      let sUpper = Js.String.toUpperCase(s);
-      let code = int_of_float(Js.String.charCodeAt(0, sUpper));
-      if (code >= 65 && code <= 90) {
-        let asciiOffset = (code + offset + 13) mod 26;
-        Js.String.fromCharCode(asciiOffset + 65);
-      } else {
-        Js.String.fromCharCode(32);
-      };
-    },
-    str,
+  Js.String.concatMany(
+    mapString(
+      s => {
+        let sUpper = Js.String.toUpperCase(s);
+        let code = int_of_float(Js.String.charCodeAt(0, sUpper));
+        if (code >= 65 && code <= 90) {
+          let asciiOffset = (code + offset + 13) mod 26;
+          Js.String.fromCharCode(asciiOffset + 65);
+        } else {
+          Js.String.fromCharCode(32);
+        };
+      },
+      str,
+    ),
+    "",
   );
