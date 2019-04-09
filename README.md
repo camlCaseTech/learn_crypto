@@ -23,6 +23,29 @@ sudo apt install yarn
 curl -sSL https://get.haskellstack.org/ | sh
 ```
 
+
+## build and run
+
+Open two command line interfaces and `cd frontend`. In the first run:
+
+```
+yarn 
+yarn start
+```
+
+In the second run:
+
+```
+yarn server
+```
+
+And go to `localhost:8001`.
+
+
+
+## ignore rest for now
+
+
 ## build
 
 The build script: 
