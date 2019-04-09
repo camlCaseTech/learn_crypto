@@ -40,9 +40,10 @@ let make = (~greeting, _children) => {
   },
 };
 
-let () = Js.log(ShiftCipher.toBinary("abc", true));
-Js.log(ShiftCipher.toAscii("abc", true));
-Js.log(ShiftCipher.mapString(s => Js.String.toUpperCase(s), "abc"));
-Js.log(ShiftCipher.encodeCaesarCipher("Hello", 1));
-Js.log(ShiftCipher.encodeCaesarCipher("Hello", 2));
-Js.log(ShiftCipher.encodeCaesarCipher("Hello", 3));
+open Cryptography;
+
+let () = Js.log(toBinary("abc", true));
+Js.log(toAscii("abc", true));
+Js.log(encodeCaesarCipher("Hello", 1));
+Js.log(encodeCaesarCipher("Hello", 2));
+Js.log(encodeCaesarCipher("Hello", 3));
