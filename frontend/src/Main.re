@@ -16,7 +16,11 @@ let make = _children => {
           Some(x => Cryptography.fromBinary(Js.String.split(" ", x)))
         )
       />
-      <Encoder encodeType="Hex" encoder=(x => Cryptography.toHex(x, true)) />
+      <Encoder
+        encodeType="Hex"
+        encoder=(x => Cryptography.toHex(x, true))
+        decoder=(Some(x => Cryptography.fromHex(Js.String.split(" ", x))))
+      />
       <CaesarCipherEncoder />
     </Container>,
 };

@@ -60,8 +60,8 @@ let fromBinary = (codes: array(string)) =>
     "",
   );
 
-let toHex = (str: string, spaceSeparatedOctets: bool) => {
-  let space = if (spaceSeparatedOctets) {" "} else {""};
+let toHex = (str: string, spaceSeparatedPairs: bool) => {
+  let space = if (spaceSeparatedPairs) {" "} else {""};
   Js.String.concatMany(
     mapString(
       s =>
@@ -79,6 +79,45 @@ let toHex = (str: string, spaceSeparatedOctets: bool) => {
     "",
   );
 };
+
+let int_of_hex_string = (str: string) =>
+  switch (int_of_string_opt(Js.String.get(str, 0))) {
+  | Some(i) => i
+  | None =>
+    switch (str) {
+    | "a" => 10
+    | "b" => 11
+    | "c" => 12
+    | "d" => 13
+    | "e" => 14
+    | "f" => 15
+    | _ => 0
+    }
+  };
+
+let fromHex = (codes: array(string)) =>
+  Js.String.concatMany(
+    Array.map(
+      (code: string) =>
+        if (Js.String.length(code) == 2) {
+          let asciiCode =
+            Array.fold_left(
+              (a, b) => a + b,
+              0,
+              mapiString(
+                (i: int, c: string) =>
+                  int_of_hex_string(c) * int_pow(16, i),
+                string_rev(code),
+              ),
+            );
+          Js.String.fromCharCode(asciiCode);
+        } else {
+          Js.String.fromCharCode(32);
+        },
+      codes,
+    ),
+    "",
+  );
 
 let encodeCaesarCipher = (str: string, offset: int) =>
   Js.String.concatMany(
