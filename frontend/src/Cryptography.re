@@ -151,3 +151,30 @@ let decodeCaesarCipher = (codes: array(int), offset: int) =>
     ),
     "",
   );
+
+let encodeMD5: string => string = [%bs.raw
+  {|
+   function (message) {
+     var CryptoJS = require("crypto-js");
+     return CryptoJS.MD5(message).toString(CryptoJS.enc.Hex);
+   }
+   |}
+];
+
+let encodeSHA256: string => string = [%bs.raw
+  {|
+   function (message) {
+     var CryptoJS = require("crypto-js");
+     return CryptoJS.SHA256(message).toString(CryptoJS.enc.Hex);
+   }
+   |}
+];
+
+let encodeSHA3: string => string = [%bs.raw
+  {|
+   function (message) {
+     var CryptoJS = require("crypto-js");
+     return CryptoJS.SHA3(message).toString(CryptoJS.enc.Hex);
+   }
+   |}
+];
