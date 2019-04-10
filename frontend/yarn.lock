@@ -516,9 +516,9 @@ browserify-zlib@^0.2.0:
     pako "~1.0.5"
 
 bs-platform@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-5.0.0.tgz#f9fded818bafc3891aeb85eb4e0d95b8d8f8b4d7"
-  integrity sha512-zxLobdIaf/r7go47hOgxcd6C0ANh7MYMEtZNb9Al7JdoekzFZI50F4GpZpP8kMh9Z+M5PoPE1WuryT4S8mT8Kg==
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-5.0.1.tgz#0e7a50a1b51896d3ff4e1df6e79d32530ba062f5"
+  integrity sha512-k3b0G9JIlavtooyQukQNCyhnE6p400vR4Nx3pdKwQpo4xlnOrUOeHV+9TBj/XAuSRRDOOgw2H57iGTCPpLxjMg==
 
 buffer-from@^1.0.0:
   version "1.1.1"
@@ -888,6 +888,11 @@ crypto-browserify@^3.11.0:
     public-encrypt "^4.0.0"
     randombytes "^2.0.0"
     randomfill "^1.0.3"
+
+crypto-js@^3.1.9-1:
+  version "3.1.9-1"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-3.1.9-1.tgz#fda19e761fc077e01ffbfdc6e9fdfc59e8806cd8"
+  integrity sha1-/aGedh/Ad+Af+/3G6f38WeiAbNg=
 
 css-select@^1.1.0:
   version "1.2.0"
@@ -4045,9 +4050,9 @@ webpack-dev-middleware@^3.6.2:
     webpack-log "^2.0.0"
 
 webpack-dev-server@^3.1.8:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/webpack-dev-server/-/webpack-dev-server-3.3.0.tgz#eee6b5cf0f754661aed796ffdcc9c6493a963a8b"
-  integrity sha512-75LTgV367MRDVIC+IBETrKEy9175+i5fy9nkw8MW+udnPCzNzSfZtKUIG5thQcooaNruPZZoEV8fCZqKJszOIw==
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/webpack-dev-server/-/webpack-dev-server-3.3.1.tgz#7046e49ded5c1255a82c5d942bcdda552b72a62d"
+  integrity sha512-jY09LikOyGZrxVTXK0mgIq9y2IhCoJ05848dKZqX1gAGLU1YDqgpOT71+W53JH/wI4v6ky4hm+KvSyW14JEs5A==
   dependencies:
     ansi-html "0.0.7"
     bonjour "^3.5.0"

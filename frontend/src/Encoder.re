@@ -19,7 +19,13 @@ let component = ReasonReact.reducerComponent("Encoder");
 
 open BsReactstrap;
 
-let make = (~encodeType: string, ~encoder: string => string, _children) => {
+let make =
+    (
+      ~encodeType: string,
+      ~encoder: string => string,
+      ~decoder: option(string => string)=None,
+      _children,
+    ) => {
   ...component,
   initialState,
   reducer,
@@ -40,7 +46,9 @@ let make = (~encodeType: string, ~encoder: string => string, _children) => {
             />
           </FormGroup>
           <FormGroup>
-            <Label for_="encoder-output"> (encodeType ++ " Output") </Label>
+            <Label for_="encoder-output">
+              (encodeType ++ " Encoded Output")
+            </Label>
             <Input
               type_="text"
               name="encoder-output"
@@ -49,6 +57,26 @@ let make = (~encodeType: string, ~encoder: string => string, _children) => {
               readOnly=true
             />
           </FormGroup>
+          (
+            switch (decoder) {
+            | Some(decoder') =>
+              let v = encoder(self.state.input);
+              let d = decoder'(v);
+              <FormGroup>
+                <Label for_="decoder-output">
+                  (encodeType ++ " Decoded Output")
+                </Label>
+                <Input
+                  type_="text"
+                  name="decoder-output"
+                  id="decoder-output"
+                  value=d
+                  readOnly=true
+                />
+              </FormGroup>;
+            | None => ReasonReact.null
+            }
+          )
         </Form>
       </Col>
     </Row>,
