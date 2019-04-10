@@ -21,7 +21,7 @@ let component = ReasonReact.reducerComponent("CaesarCipherEncoder");
 
 open BsReactstrap;
 
-let make = (_children) => {
+let make = _children => {
   ...component,
   initialState,
   reducer,
@@ -49,20 +49,53 @@ let make = (_children) => {
               id="encoder-input"
               value=self.state.offset
               onChange=(e => self.send(UpdateOffset(getTargetString(e))))
-              
             />
           </FormGroup>
           <FormGroup>
-            <Label for_="encoder-output"> "Caesar Cipher Encoder Output" </Label>
+            <Label for_="encoder-output">
+              "Caesar Cipher Encoder Output"
+            </Label>
             <Input
               type_="text"
               name="encoder-output"
               id="encoder-output"
               value=(
-              switch (int_of_string_opt(self.state.offset)) {
-              | Some(offset) => Cryptography.encodeCaesarCipher(self.state.input, offset)
-              | None => ""
-              }
+                switch (int_of_string_opt(self.state.offset)) {
+                | Some(offset) =>
+                  Cryptography.encodeCaesarCipher(self.state.input, offset)
+                | None => ""
+                }
+              )
+              readOnly=true
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label for_="encoder-output">
+              "Caesar Cipher Decoder Output"
+            </Label>
+            <Input
+              type_="text"
+              name="encoder-output"
+              id="encoder-output"
+              value=(
+                switch (int_of_string_opt(self.state.offset)) {
+                | Some(offset) =>
+                  let encoded =
+                    Cryptography.encodeCaesarCipher(self.state.input, offset);
+                  Js.Console.log("encoded:");
+                  Js.Console.log(encoded);
+                  let codes =
+                    Array.map(
+                      s => Js.String2.charCodeAt(s, 0) |> int_of_float,
+                      Js.String.split("", encoded),
+                    );
+
+                  Js.Console.log(codes);
+                  Cryptography.decodeCaesarCipher(codes, offset);
+
+                /* "" */
+                | None => ""
+                }
               )
               readOnly=true
             />
