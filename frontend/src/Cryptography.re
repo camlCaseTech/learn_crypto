@@ -152,6 +152,94 @@ let decodeCaesarCipher = (codes: array(int), offset: int) =>
     "",
   );
 
+let asciiToAlphabetOrder = (char: string) => {
+  let sUpper = Js.String.toUpperCase(char);
+  int_of_float(Js.String.charCodeAt(0, sUpper)) - 65;
+};
+
+/*
+ let alphabetOrderToAscii = (code: int) => {
+   let sUpper = Js.String.toUpperCase(char);
+   int_of_float(Js.String.charCodeAt(0, sUpper)) - 65;
+ };
+ */
+
+/* the key should be a non-empty list of  */
+let encodeVignereCipherSafe = (str: string, key: array(int)) => {
+  /* A is 0, B is 1, ... Z is 25 */
+  let keyLength = Array.length(key);
+  Js.String.concatMany(
+    mapiString(
+      (i, s) =>
+        if (s == " ") {
+          " ";
+        } else {
+          let k = key[i mod keyLength];
+          encodeCaesarCipher(s, k);
+        },
+      str,
+    ),
+    "",
+  );
+};
+
+/* make this safer */
+let encodeVignereCipher = (str: string, key: string) => {
+  let keyIntArray =
+    arrayCatSomes(
+      mapString(
+        k => {
+          let code = asciiToAlphabetOrder(k);
+          if (code >= 0 || code < 25) {
+            Some(code);
+          } else {
+            None;
+          };
+        },
+        key,
+      ),
+    );
+
+  encodeVignereCipherSafe(str, keyIntArray);
+};
+
+let decodeVignereCipherSafe = (str: string, key: array(int)) => {
+  let keyLength = Array.length(key);
+  Js.String.concatMany(
+    mapiString(
+      (i, s) =>
+        if (s == " ") {
+          " ";
+        } else {
+          let k = key[i mod keyLength];
+          let code = Js.String2.charCodeAt(s, 0) |> int_of_float;
+          decodeCaesarCipher([|code|], k);
+        },
+      str,
+    ),
+    "",
+  );
+};
+
+let decodeVignereCipher = (str: string, key: string) => {
+  let keyIntArray =
+    arrayCatSomes(
+      mapString(
+        k => {
+          let code = asciiToAlphabetOrder(k);
+          if (code >= 0 || code < 25) {
+            Some(code);
+          } else {
+            None;
+          };
+        },
+        key,
+      ),
+    );
+
+  decodeVignereCipherSafe(str, keyIntArray);
+};
+
 let encodeMD5: string => string = [%bs.raw
   {|
    function (message) {

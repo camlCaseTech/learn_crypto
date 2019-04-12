@@ -22,5 +22,7 @@ let make = _children => {
         decoder=(Some(x => Cryptography.fromHex(Js.String.split(" ", x))))
       />
       <CaesarCipherEncoder />
+      <VignereCipherEncoder />
+      <BarChart id="bar_chart" />
     </Container>,
 };
