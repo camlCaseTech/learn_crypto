@@ -12,6 +12,12 @@ let toAscii = (str, withSpace) => {
   );
 };
 
+let fromAscii = (codes: array(int)) =>
+  Js.String.concatMany(
+    Array.map(code => Js.String.fromCharCode(code), codes),
+    "",
+  );
+
 let toBinary = (str: string, spaceSeparatedOctets: bool) => {
   let space = if (spaceSeparatedOctets) {" "} else {""};
   Js.String.concatMany(
@@ -240,6 +246,54 @@ let decodeVignereCipher = (str: string, key: string) => {
   decodeVignereCipherSafe(str, keyIntArray);
 };
 
+let mapFirst = (f: 'a => 'b, xs: array(('a, 'c))) =>
+  Array.map(((a: 'a, c: 'c)) => (f(a), c), xs);
+
+let firsts = (xs: array(('a, 'b))) =>
+  Array.map(((a: 'a, _b: 'b)) => a, xs);
+
+let seconds = (xs: array(('a, 'b))) =>
+  Array.map(((_a: 'a, b: 'b)) => b, xs);
+
+let encodeXOR = (str: string) : (string, array(int)) => {
+  Random.self_init();
+  let results =
+    arrayCatSomes(
+      mapString(
+        s => {
+          let oneTimepadCode = Random.int(27);
+          let sUpper = Js.String.toUpperCase(s);
+          let asciiCode = int_of_float(Js.String.charCodeAt(0, sUpper));
+          if (asciiCode >= 65 && asciiCode <= 90 || asciiCode == 32) {
+            let cipherPiece = asciiCode lxor oneTimepadCode;
+            Some((Js.String.fromCharCode(cipherPiece), oneTimepadCode));
+          } else {
+            None;
+          };
+        },
+        str,
+      ),
+    );
+  let cipher = Js.String.concatMany(firsts(results), "");
+  let oneTimepad = seconds(results);
+  (cipher, oneTimepad);
+};
+
+let decodeXOR = (str: string, oneTimepad: array(int)) =>
+  Js.String.concatMany(
+    mapiString(
+      (i: int, s: string) => {
+        let oneTimepadCode = oneTimepad[i];
+        let sUpper = Js.String.toUpperCase(s);
+        let asciiCode = int_of_float(Js.String.charCodeAt(0, sUpper));
+        let cipherPiece = asciiCode lxor oneTimepadCode;
+        Js.String.fromCharCode(cipherPiece);
+      },
+      str,
+    ),
+    "",
+  );
+
 let encodeMD5: string => string = [%bs.raw
   {|
    function (message) {
@@ -266,3 +320,63 @@ let encodeSHA3: string => string = [%bs.raw
    }
    |}
 ];
+
+let englishFreq =
+  Belt.Map.String.fromArray([|
+    ("A", 0.08167),
+    ("B", 0.01492),
+    ("C", 0.02782),
+    ("D", 0.04253),
+    ("E", 0.12702),
+    ("F", 0.02288),
+    ("G", 0.02015),
+    ("H", 0.06094),
+    ("I", 0.06966),
+    ("J", 0.00153),
+    ("K", 0.00772),
+    ("L", 0.04025),
+    ("M", 0.02406),
+    ("N", 0.06749),
+    ("O", 0.07507),
+    ("P", 0.01929),
+    ("Q", 0.00095),
+    ("R", 0.05987),
+    ("S", 0.06327),
+    ("T", 0.09056),
+    ("U", 0.02758),
+    ("V", 0.00978),
+    ("W", 0.02360),
+    ("X", 0.00150),
+    ("Y", 0.01974),
+    ("Z", 0.00074),
+  |]);
+
+let englishNewInputFreq = () =>
+  Belt.MutableMap.String.fromArray([|
+    ("A", 0.),
+    ("B", 0.),
+    ("C", 0.),
+    ("D", 0.),
+    ("E", 0.),
+    ("F", 0.),
+    ("G", 0.),
+    ("H", 0.),
+    ("I", 0.),
+    ("J", 0.),
+    ("K", 0.),
+    ("L", 0.),
+    ("M", 0.),
+    ("N", 0.),
+    ("O", 0.),
+    ("P", 0.),
+    ("Q", 0.),
+    ("R", 0.),
+    ("S", 0.),
+    ("T", 0.),
+    ("U", 0.),
+    ("V", 0.),
+    ("W", 0.),
+    ("X", 0.),
+    ("Y", 0.),
+    ("Z", 0.),
+  |]);
