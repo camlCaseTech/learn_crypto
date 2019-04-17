@@ -93,3 +93,8 @@ let string_rev = s => {
   let len = String.length(s);
   String.init(len, i => s.[len - 1 - i]);
 };
+
+let int_of_string_opt = x =>
+  try (Some(int_of_string(x))) {
+  | Failure(_) => None
+  };
