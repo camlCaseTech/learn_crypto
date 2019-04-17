@@ -158,6 +158,7 @@ let decodeCaesarCipher = (codes: array(int), offset: int) =>
     "",
   );
 
+
 let asciiToAlphabetOrder = (char: string) => {
   let sUpper = Js.String.toUpperCase(char);
   int_of_float(Js.String.charCodeAt(0, sUpper)) - 65;
